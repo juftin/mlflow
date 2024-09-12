@@ -22,6 +22,8 @@ def upgrade(url):
     recover from failures.
     """
     import mlflow.store.db.utils
+    import mlflow.server.handlers
 
     engine = mlflow.store.db.utils.create_sqlalchemy_engine_with_retry(url)
+    mlflow.server.handlers.initialize_backend_stores(url)
     mlflow.store.db.utils._upgrade_db(engine)
